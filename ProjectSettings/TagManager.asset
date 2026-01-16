@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 3
+  tags:
+  - Enemy
+  - CameraFollow
+  - LimiteMap
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - Player
+  - Water
+  - UI
+  - PlayerHitBox
+  - Ground
+  - GroundParede
+  - GroundTeto
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Fundo
+    uniqueID: 4253780911
+    locked: 0
+  - name: Background3
+    uniqueID: 1239758219
+    locked: 0
+  - name: Background2
+    uniqueID: 1723000719
+    locked: 0
+  - name: Background
+    uniqueID: 3975448511
+    locked: 0
+  - name: Ground
+    uniqueID: 1336507859
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Foreground
+    uniqueID: 4212089917
+    locked: 0
+  - name: Foreground2
+    uniqueID: 2753754827
+    locked: 0
+  - name: UI
+    uniqueID: 423582481
+    locked: 0
+  - name: Transicao
+    uniqueID: 2594263633
+    locked: 0
+  m_RenderingLayers:
+  - Default
