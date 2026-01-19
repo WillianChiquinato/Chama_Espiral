@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: fbd6839b6cc1a0f4f902cb324205f449
+guid: e88d35958c264c74c875d02a41f6744f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2212106167710372489
-    second: mc_walk_1_0
+      213: -4109316116632512207
+    second: mc_idle_1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: mc_walk_1_0
+      name: mc_idle_1_0
       rect:
         serializedVersion: 2
-        x: 41
-        y: 5
-        width: 114
-        height: 191
+        x: 44
+        y: 1
+        width: 109
+        height: 195
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 982d3dbd6daf2be10800000000000000
-      internalID: 2212106167710372489
+      spriteID: 139d45693c6c8f6c0800000000000000
+      internalID: -4109316116632512207
       vertices: []
       indices: 
       edges: []
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      mc_walk_1_0: 2212106167710372489
+      mc_idle_1_0: -4109316116632512207
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -56,18 +56,18 @@ public class CameraController : MonoBehaviour
         shouldFlip = !playerInsideTrigger;
     }
 
-    public void ChamarTurn()
+    public void ChamarTurn(bool flipRight)
     {
         if (!shouldFlip || isFlipping) return;
-        StartCoroutine(FlipOffset());
+        StartCoroutine(FlipOffset(flipRight));
     }
 
-    IEnumerator FlipOffset()
+    IEnumerator FlipOffset(bool flipRight)
     {
         isFlipping = true;
 
         float startX = composer.TargetOffset.x;
-        isFacingRight = !isFacingRight;
+        isFacingRight = flipRight;
         float endX = isFacingRight ? offsetRight.x : -offsetRight.x;
 
         float elapsed = 0f;

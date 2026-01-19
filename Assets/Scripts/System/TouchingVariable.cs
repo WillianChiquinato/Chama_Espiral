@@ -9,7 +9,7 @@ public class TouchingVariable : MonoBehaviour
     public float WallDistancia;
     public float CeilingDistancia;
 
-    BoxCollider2D touchingCol;
+    CapsuleCollider2D touchingCol;
     Animator animator;
 
     [SerializeField]
@@ -61,7 +61,7 @@ public class TouchingVariable : MonoBehaviour
 
     private void Awake()
     {
-        touchingCol = GetComponent<BoxCollider2D>();
+        touchingCol = GetComponent<CapsuleCollider2D>();
         animator = GetComponent<Animator>();
 
         // Obtenha as dimensões do CapsuleCollider2D

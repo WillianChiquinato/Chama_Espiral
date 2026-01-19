@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - CameraFollow
   - LimiteMap
+  - Ground
   layers:
   - Default
   - TransparentFX
@@ -18,8 +19,8 @@ TagManager:
   - Ground
   - GroundParede
   - GroundTeto
-  - 
-  - 
+  - Enemy
+  - EnemyHitBox
   - 
   - 
   - 
@@ -58,6 +59,9 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Chama
+    uniqueID: 3056292621
     locked: 0
   - name: Foreground
     uniqueID: 4212089917

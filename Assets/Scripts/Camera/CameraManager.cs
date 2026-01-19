@@ -10,10 +10,11 @@ public class CameraManager : MonoBehaviour
 
     [Header("Cinemachine")]
     private CinemachinePositionComposer composer;
+    private CameraController cameraController;
 
     private Vector3 startOffset;
 
-    private void Awake()
+    private void Start()
     {
         if (instance == null)
             instance = this;
@@ -21,7 +22,7 @@ public class CameraManager : MonoBehaviour
             Destroy(gameObject);
 
         composer = GameManager.Instance.cinemachineCamera.GetCinemachineComponent(CinemachineCore.Stage.Body) as CinemachinePositionComposer;
-
+        cameraController = GameManager.Instance.cinemachineCamera.GetComponent<CameraController>();
         startOffset = composer.TargetOffset;
     }
 
@@ -34,11 +35,19 @@ public class CameraManager : MonoBehaviour
         panCoroutine = StartCoroutine(PanRoutine(targetOffset, panTime));
     }
 
-    public void ResetPan(float panTime)
+    public void ResetPan(float panTime, Vector2 positionPlayer)
     {
         if (panCoroutine != null)
             StopCoroutine(panCoroutine);
 
+        if (positionPlayer.x > 0)
+        {
+            startOffset = new Vector3(-startOffset.x, 0, 0f);
+            panCoroutine = StartCoroutine(PanRoutine(startOffset, panTime));
+            return;
+        }
+
+        startOffset = new Vector3(startOffset.x, 0, 0f);
         panCoroutine = StartCoroutine(PanRoutine(startOffset, panTime));
     }
 
@@ -55,6 +64,33 @@ public class CameraManager : MonoBehaviour
         }
 
         composer.TargetOffset = targetOffset;
+    }
+
+    public void AttackCameraDirection(Vector2 attackDirection, float panTime)
+    {
+        if (panCoroutine != null)
+            StopCoroutine(panCoroutine);
+
+        Vector3 targetOffset = startOffset + (Vector3)(attackDirection * 6.5f);
+        panCoroutine = StartCoroutine(PanRoutine(targetOffset, panTime));
+    }
+
+    public IEnumerator ResetAttackCamera(float panTime, Vector2 positionPlayer)
+    {
+        yield return new WaitForSeconds(1.7f);
+
+        if (panCoroutine != null)
+            StopCoroutine(panCoroutine);
+
+        if (positionPlayer.x > 0)
+        {
+            startOffset = new Vector3(-startOffset.x, 0, 0f);
+            panCoroutine = StartCoroutine(PanRoutine(startOffset, panTime));
+            yield break;
+        }
+
+        startOffset = new Vector3(startOffset.x, 0, 0f);
+        panCoroutine = StartCoroutine(PanRoutine(startOffset, panTime));
     }
 }
 

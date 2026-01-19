@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: e8eef463de0d2ed408ca445148cfeaaf
+guid: 28ee3163f37e8134398f38941c6e59d5
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1157718903247576198
-    second: mc_walk_2_0
+      213: -8758793562040544788
+    second: 305_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 4096
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -139,23 +139,133 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: mc_walk_2_0
+      name: 305_0
       rect:
         serializedVersion: 2
-        x: 50
-        y: 0
-        width: 96
-        height: 194
+        x: 0
+        y: 267
+        width: 135
+        height: 135
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 68c93d9653b011010800000000000000
-      internalID: 1157718903247576198
+      spriteID: ce1589159a3827680800000000000000
+      internalID: -8758793562040544788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 305_1
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 267
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be9ba3a0b308ab44c8cdd6bd202a6fa6
+      internalID: -1109344470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 305_2
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 267
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cab2a91267aee7d49a6a57cda10e5cad
+      internalID: 1099049589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 305_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 132
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fab8fe992f750b648af62ad831f86149
+      internalID: -260839326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 305_4
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 132
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 729684a9849b629459e349e2f74bdcb5
+      internalID: 1113762533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 305_5
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 132
+        width: 135
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f006bbeeedf20bd4699a1c9e3b1f424e
+      internalID: -1334428400
       vertices: []
       indices: 
       edges: []
@@ -164,7 +274,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: b9fcf943c149b27438deb246be12ea63
     internalID: 0
     vertices: []
     indices: 
@@ -172,9 +282,16 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":135.0,"y":135.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      mc_walk_2_0: 1157718903247576198
+      305_0: -8758793562040544788
+      305_1: -1109344470
+      305_2: 1099049589
+      305_3: -260839326
+      305_4: 1113762533
+      305_5: -1334428400
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

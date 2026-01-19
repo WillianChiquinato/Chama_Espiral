@@ -1,19 +1,22 @@
 using System.Collections;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class CameraControllerTrigger : MonoBehaviour
 {
     public CustomInspector customInspectorObje;
+    private CinemachinePositionComposer composer;
     public bool PlayerDetect;
 
     [Header("Box Collider Mode")]
     [Tooltip("Usar o centro do BoxCollider2D como destino da câmera")]
     public bool useBoxColliderCenter = false;
-    
+    private Transform boxCenterTarget;
+
     [Tooltip("Multiplicador para expandir a câmera baseado no tamanho do BoxCollider2D")]
     [Range(0f, 2f)]
     public float cameraExpansionScale = 1f;
-    
+
     [Tooltip("Offset adicional em relação ao centro do BoxCollider2D")]
     public Vector2 centerOffset = Vector2.zero;
 
@@ -26,10 +29,12 @@ public class CameraControllerTrigger : MonoBehaviour
     {
         PlayerDetect = false;
         boxCollider = GetComponent<BoxCollider2D>();
-        
-        if (useBoxColliderCenter && boxCollider == null)
+
+        if (useBoxColliderCenter && boxCollider != null)
         {
-            Debug.LogWarning($"[{gameObject.name}] useBoxColliderCenter está ativo mas não há BoxCollider2D no objeto!");
+            GameObject target = new GameObject($"{name}_CameraCenter");
+            target.transform.SetParent(transform);
+            boxCenterTarget = target.transform;
         }
     }
 
@@ -46,105 +51,92 @@ public class CameraControllerTrigger : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!collision.CompareTag("Player")) return;
+        if (!customInspectorObje.panCameraContact) return;
 
         PlayerDetect = true;
 
-        if (!customInspectorObje.panCameraContact) return;
-
-        var player = collision.GetComponent<PlayerController>();
-        Vector2 pan;
-        
         if (useBoxColliderCenter && boxCollider != null)
         {
-            pan = GetPanToBoxCenter();
-        }
-        else
-        {
-            // Usa o sistema antigo de direções
-            pan = GetPanValues(
-                customInspectorObje.panDirection,
-                customInspectorObje.panDistance,
-                customInspectorObje.panDistance2
-            );
+            GetPanToBoxCenter();
+            return;
         }
 
-        CameraManager.instance.PanCamera(
-            pan,
-            customInspectorObje.panTime
+        Vector2 pan = GetPanValues(
+            customInspectorObje.panDirection,
+            customInspectorObje.panDistance,
+            customInspectorObje.panDistance2
         );
+
+        CameraManager.instance.PanCamera(pan, customInspectorObje.panTime);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (!collision.CompareTag("Player")) return;
+        if (!customInspectorObje.panCameraContact) return;
 
         PlayerDetect = false;
 
-        if (!customInspectorObje.panCameraContact) return;
+        // 🔹 Volta para o target original
+        if (cameraTransitionCoroutine != null)
+            StopCoroutine(cameraTransitionCoroutine);
 
-        CameraManager.instance.PanCamera(
-            Vector2.zero,
-            customInspectorObje.panTime
-        );
-        
-        // Reverte a expansão da câmera
-        if (useBoxColliderCenter && cameraExpansionScale != 0f)
-        {
-            if (cameraTransitionCoroutine != null)
-                StopCoroutine(cameraTransitionCoroutine);
-            
-            cameraTransitionCoroutine = StartCoroutine(TransitionCameraExpansion(
+        cameraTransitionCoroutine = StartCoroutine(
+            TransitionCameraExpansion(
                 originalOrthographicSize,
                 originalTarget,
                 customInspectorObje.panTime
-            ));
+            )
+        );
+
+        if (!useBoxColliderCenter)
+        {
+            CameraManager.instance.PanCamera(Vector2.zero, customInspectorObje.panTime);
         }
     }
 
-    private Vector2 GetPanToBoxCenter()
+    private void GetPanToBoxCenter()
     {
-        // Calcula a posição do centro do BoxCollider2D no mundo
-        Vector2 boxWorldCenter = (Vector2)transform.position + boxCollider.offset;
-        Vector2 panToCenter = boxWorldCenter + centerOffset;
-        
-        // Aplica o multiplicador de expansão se necessário
-        if (cameraExpansionScale != 0f)
-        {
-            if (cameraTransitionCoroutine != null)
-                StopCoroutine(cameraTransitionCoroutine);
-            
-            cameraTransitionCoroutine = StartCoroutine(TransitionCameraExpansion(
+        Vector2 center = (Vector2)boxCollider.bounds.center + centerOffset;
+
+        boxCenterTarget.position = center;
+
+        if (cameraTransitionCoroutine != null)
+            StopCoroutine(cameraTransitionCoroutine);
+
+        cameraTransitionCoroutine = StartCoroutine(
+            TransitionCameraExpansion(
                 originalOrthographicSize * cameraExpansionScale,
-                transform,
+                boxCenterTarget,
                 customInspectorObje.panTime
-            ));
-        }
-        
-        Debug.Log($"[CameraTrigger] BoxCenter: {boxWorldCenter}, FinalPan: {panToCenter}");
-        
-        return panToCenter;
+            )
+        );
     }
-    
+
     private IEnumerator TransitionCameraExpansion(float targetSize, Transform targetTransform, float duration)
     {
         var camera = GameManager.Instance.cinemachineCamera;
+        CameraManager.instance.ResetPan(duration, GameManager.Instance.player.transform.localScale);
+    
+        // 🔹 Troca o target logo no início
+        camera.Target = new CameraTarget
+        {
+            TrackingTarget = targetTransform
+        };
+
         float startSize = camera.Lens.OrthographicSize;
         float elapsed = 0f;
-        
-        camera.Target = new Unity.Cinemachine.CameraTarget { TrackingTarget = targetTransform };
-        
+
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
             float t = elapsed / duration;
-            
-            // Lerp do tamanho da câmera
+
             camera.Lens.OrthographicSize = Mathf.Lerp(startSize, targetSize, t);
-            
+
             yield return null;
         }
-        
-        // Garante valores finais
+
         camera.Lens.OrthographicSize = targetSize;
     }
 
@@ -170,20 +162,20 @@ public class CameraControllerTrigger : MonoBehaviour
     {
         // Visualização do sistema no Editor
         if (!useBoxColliderCenter) return;
-        
+
         BoxCollider2D col = GetComponent<BoxCollider2D>();
         if (col == null) return;
 
         // Desenha o centro do BoxCollider2D
-        Vector2 boxWorldCenter = (Vector2)transform.position + col.offset;
+        Vector2 boxWorldCenter = col.bounds.center;
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(boxWorldCenter, 0.3f);
-        
+
         // Desenha o centro com offset aplicado
         Vector2 centerWithOffset = boxWorldCenter + centerOffset;
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(centerWithOffset, 0.2f);
-        
+
         // Desenha a área de expansão da câmera
         Vector2 expansion = col.size * cameraExpansionScale;
         Gizmos.color = new Color(0, 1, 0, 0.3f);

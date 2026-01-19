@@ -74,6 +74,20 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject _cameraFollow;
     [SerializeField] public CameraController cameraController;
 
+    [Header("Attack Instances")]
+    public GameObject chamaPrefab;
+    public Transform attackPoint;
+    public float speedTarget = 0;
+    public float currentSpeedTarget = 0;
+    [SerializeField] private float minAttackForce = 7f;
+    [SerializeField] private float maxAttackForce = 20f;
+    private float attackTime;
+    public bool isAttacking = false;
+
+    [Header("Attack Direction")]
+    public Vector2 playerDirectionTarget = Vector2.right;
+    private Vector2 lastMoveDirection = Vector2.right;
+
     public float CurrentMoveSpeed
     {
         get
@@ -204,7 +218,7 @@ public class PlayerController : MonoBehaviour
 
         spriteRenderer = GetComponent<SpriteRenderer>();
         originalMaterial = spriteRenderer.material;
-        
+
         canMove = true;
         IsAlive = true;
     }
@@ -215,6 +229,8 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
+
+        animacao.SetBool("isAttacking", isAttacking);
 
         if (!canMove)
         {
@@ -263,6 +279,11 @@ public class PlayerController : MonoBehaviour
                 healingTimer = 2;
             }
         }
+
+        //Shoot chama.
+        if (!isAttacking) return;
+        currentSpeedTarget += speedTarget * Time.deltaTime;
+        currentSpeedTarget = Mathf.Clamp(currentSpeedTarget, minAttackForce, maxAttackForce);
 
         // if (!isFlashingDamage && DamageScript.Health != lastHealth)
         // {
@@ -324,6 +345,12 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Move Chamado..");
         moveInput = context.ReadValue<Vector2>();
 
+
+        if (moveInput != Vector2.zero)
+        {
+            lastMoveDirection = moveInput.normalized;
+        }
+
         if (IsAlive)
         {
             IsMoving = moveInput != Vector2.zero;
@@ -343,19 +370,19 @@ public class PlayerController : MonoBehaviour
         if (moveInput.x > 0 && !IsRight)
         {
             IsRight = true;
-            cameraController.ChamarTurn();
+            cameraController.ChamarTurn(IsRight);
         }
         else if (moveInput.x < 0 && IsRight)
         {
             IsRight = false;
-            cameraController.ChamarTurn();
+            cameraController.ChamarTurn(IsRight);
         }
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
         Debug.Log("Jump Chamado...");
-        if (context.started)
+        if (context.started && !isAttacking)
         {
             jumpInput = true;
 
@@ -392,7 +419,59 @@ public class PlayerController : MonoBehaviour
 
     public void OnAttack(InputAction.CallbackContext context)
     {
-        Debug.Log("Attack input received" + gameObject.name + "");
+        if (!touching.IsGrouded) return;
+
+        // Começou a segurar
+        if (context.started)
+        {
+            isAttacking = true;
+            currentSpeedTarget = minAttackForce;
+        }
+
+        // Soltou o botão
+        if (context.canceled)
+        {
+            isAttacking = false;
+            ResolveAttackDirection();
+            animacao.SetTrigger("releaseAttack");
+        }
+    }
+
+    private void ShootChama()
+    {
+        GameObject fire = Instantiate(chamaPrefab, attackPoint.position, Quaternion.identity);
+
+        Rigidbody2D rb = fire.GetComponent<Rigidbody2D>();
+        rb.linearVelocity = playerDirectionTarget * currentSpeedTarget;
+
+        // Rotação visual
+        float angle = Mathf.Atan2(playerDirectionTarget.y, playerDirectionTarget.x) * Mathf.Rad2Deg;
+        
+        //Correção de 180 graus para não ficar de cabeça para baixo
+        if (angle == 180f) angle = 0f;
+        fire.transform.rotation = Quaternion.Euler(0, 0, angle);
+    }
+
+    private void ResolveAttackDirection()
+    {
+        // Prioridade vertical
+        if (Mathf.Abs(lastMoveDirection.y) > Mathf.Abs(lastMoveDirection.x))
+        {
+            playerDirectionTarget = lastMoveDirection.y > 0
+                ? Vector2.up
+                : Vector2.down;
+        }
+        else
+        {
+            playerDirectionTarget = lastMoveDirection.x > 0
+                ? Vector2.right
+                : Vector2.left;
+        }
+
+        if (!cameraController.shouldFlip) return;
+
+        CameraManager.instance.AttackCameraDirection(playerDirectionTarget, 0.2f);
+        StartCoroutine(CameraManager.instance.ResetAttackCamera(0.4f, transform.position));
     }
 
     public void OnHit(int damage, Vector2 knockback)
