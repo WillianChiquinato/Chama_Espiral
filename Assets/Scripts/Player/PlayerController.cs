@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     public string currentScene;
 
     [Header("Instances")]
+    public GameObject chamaNaMao;
+
     public float currentZRotation;
     public float maxSpeed = 7f;
     public float speed = 2f;
@@ -77,10 +79,12 @@ public class PlayerController : MonoBehaviour
     [Header("Attack Instances")]
     public GameObject chamaPrefab;
     public Transform attackPoint;
+    
     public float speedTarget = 0;
     public float currentSpeedTarget = 0;
-    [SerializeField] private float minAttackForce = 7f;
-    [SerializeField] private float maxAttackForce = 20f;
+    public float minAttackForce = 7f;
+    public float maxAttackForce = 20f;
+
     private float attackTime;
     public bool isAttacking = false;
 
@@ -231,6 +235,12 @@ public class PlayerController : MonoBehaviour
         }
 
         animacao.SetBool("isAttacking", isAttacking);
+
+        if (GameManager.Instance.currentFlameAmmo <= 0)
+        {
+            //Mudar para animação.
+            chamaNaMao.SetActive(false);
+        }
 
         if (!canMove)
         {
@@ -422,18 +432,31 @@ public class PlayerController : MonoBehaviour
         if (!touching.IsGrouded) return;
 
         // Começou a segurar
-        if (context.started)
+        if (GameManager.Instance.currentFlameAmmo > 0)
         {
-            isAttacking = true;
-            currentSpeedTarget = minAttackForce;
-        }
+            if (context.started)
+            {
+                isAttacking = true;
+                currentSpeedTarget = minAttackForce;
 
-        // Soltou o botão
-        if (context.canceled)
+                UIController.Instance.StartCoroutine(UIController.Instance.FadeInCanvasGroup(UIController.Instance.carregadorAttackSlider.gameObject, 0f, 0.4f));
+            }
+
+            // Soltou o botão
+            if (context.canceled)
+            {
+                isAttacking = false;
+                ResolveAttackDirection();
+                animacao.SetTrigger("releaseAttack");
+                UIController.Instance.StartCoroutine(UIController.Instance.FadeOutCanvasGroup(UIController.Instance.carregadorAttackSlider.gameObject, 0f, 0.4f));
+                return;
+            }
+        }
+        else
         {
             isAttacking = false;
-            ResolveAttackDirection();
-            animacao.SetTrigger("releaseAttack");
+            currentSpeedTarget = 0;
+            GameManager.Instance.shakeController.ShakeNoBullets();
         }
     }
 
@@ -446,9 +469,11 @@ public class PlayerController : MonoBehaviour
 
         // Rotação visual
         float angle = Mathf.Atan2(playerDirectionTarget.y, playerDirectionTarget.x) * Mathf.Rad2Deg;
-        
+
         //Correção de 180 graus para não ficar de cabeça para baixo
         fire.transform.rotation = Quaternion.Euler(0, 0, angle);
+
+        GameManager.Instance.currentFlameAmmo--;
     }
 
     private void ResolveAttackDirection()
@@ -487,7 +512,7 @@ public class PlayerController : MonoBehaviour
 
         rb.linearVelocity = Vector2.zero;
         rb.linearVelocity = new Vector2(knockback.x, rb.linearVelocity.y + knockback.y);
-        // GameManager.instance.shakeCamera.ShakeHitDamage();
+        GameManager.Instance.shakeController.ShakeHitDamage();
 
         if (DamageScript.IsAlive)
         {

@@ -16,7 +16,7 @@ public class ChamaController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Inimigos") || collision.CompareTag("Ground"))
+        if (collision.CompareTag("Enemy") || collision.CompareTag("Ground"))
         {
             animator.SetTrigger("Impacto");
             rb.bodyType = RigidbodyType2D.Static;

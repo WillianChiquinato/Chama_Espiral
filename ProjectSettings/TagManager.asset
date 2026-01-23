@@ -8,6 +8,8 @@ TagManager:
   - CameraFollow
   - LimiteMap
   - Ground
+  - Interacts
+  - Flame
   layers:
   - Default
   - TransparentFX
@@ -21,7 +23,7 @@ TagManager:
   - GroundTeto
   - Enemy
   - EnemyHitBox
-  - 
+  - Interact
   - 
   - 
   - 

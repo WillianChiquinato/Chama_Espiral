@@ -7,8 +7,14 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    [Header("References")]
     public PlayerController player;
     public CinemachineCamera cinemachineCamera;
+    public ShakeController shakeController;
+
+    [Header("Flame Settings and Variables")]
+    public int flameMaxAmmo = 1;
+    public int currentFlameAmmo;
 
     void Awake()
     {
@@ -22,5 +28,8 @@ public class GameManager : MonoBehaviour
     {
         player = FindFirstObjectByType<PlayerController>();
         cinemachineCamera = FindFirstObjectByType<CinemachineCamera>();
+        shakeController = FindFirstObjectByType<ShakeController>();
+
+        currentFlameAmmo = flameMaxAmmo;
     }
 }
