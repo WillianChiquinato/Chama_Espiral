@@ -63,5 +63,6 @@ public class InteractController : MonoBehaviour
 
         target.GetComponent<Animator>().SetBool("isInteracting", true);
         target.luzFlame.intensity = target.luzIntensityTarget;
+        target.particleFlame.Play();
     }
 }

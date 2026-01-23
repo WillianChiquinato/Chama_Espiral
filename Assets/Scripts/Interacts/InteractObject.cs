@@ -8,13 +8,16 @@ public class InteractObject : MonoBehaviour
     
     private Animator animator;
     public Light2D luzFlame;
+    public ParticleSystem particleFlame;
     [HideInInspector] public float luzIntensityTarget;
 
     void Start()
     {
         animator = GetComponent<Animator>();
         luzFlame = GetComponentInChildren<Light2D>();
+        particleFlame = GetComponentInChildren<ParticleSystem>();
 
+        particleFlame.Stop();
         luzIntensityTarget = luzFlame.intensity;
         luzFlame.intensity = 0f;
         if (interactType == null)
