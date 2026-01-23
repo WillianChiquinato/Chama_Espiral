@@ -21,9 +21,15 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: -4109316116632512207, guid: e88d35958c264c74c875d02a41f6744f, type: 3}
-    - time: 0.6666667
-      value: {fileID: -4109316116632512207, guid: e88d35958c264c74c875d02a41f6744f, type: 3}
+      value: {fileID: -7586245453284557617, guid: 1dff9a55de6d2d84aaffe4b3e66eee96, type: 3}
+    - time: 0.083333336
+      value: {fileID: 7415443940336193896, guid: bdaaf8f64c74527428d5d3f910090559, type: 3}
+    - time: 0.25
+      value: {fileID: -6550161005615689619, guid: 8ea1523b7aa6fd943a5729fc1300368d, type: 3}
+    - time: 0.33333334
+      value: {fileID: 8844720608234455781, guid: f1dbb9adea10d1846aac5d83a9a0882c, type: 3}
+    - time: 0.41666666
+      value: {fileID: -7666685419795658508, guid: ca4e18aa15f7ef644b77507da8e3104c, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -46,14 +52,17 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: -4109316116632512207, guid: e88d35958c264c74c875d02a41f6744f, type: 3}
-    - {fileID: -4109316116632512207, guid: e88d35958c264c74c875d02a41f6744f, type: 3}
+    - {fileID: -7586245453284557617, guid: 1dff9a55de6d2d84aaffe4b3e66eee96, type: 3}
+    - {fileID: 7415443940336193896, guid: bdaaf8f64c74527428d5d3f910090559, type: 3}
+    - {fileID: -6550161005615689619, guid: 8ea1523b7aa6fd943a5729fc1300368d, type: 3}
+    - {fileID: 8844720608234455781, guid: f1dbb9adea10d1846aac5d83a9a0882c, type: 3}
+    - {fileID: -7666685419795658508, guid: ca4e18aa15f7ef644b77507da8e3104c, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.75
+    m_StopTime: 0.5
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -73,7 +82,7 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.5833333
+  - time: 0.41666666
     functionName: ShootChama
     data: 
     objectReferenceParameter: {fileID: 0}

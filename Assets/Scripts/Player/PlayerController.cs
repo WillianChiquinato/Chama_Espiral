@@ -448,7 +448,6 @@ public class PlayerController : MonoBehaviour
         float angle = Mathf.Atan2(playerDirectionTarget.y, playerDirectionTarget.x) * Mathf.Rad2Deg;
         
         //Correção de 180 graus para não ficar de cabeça para baixo
-        if (angle == 180f) angle = 0f;
         fire.transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 

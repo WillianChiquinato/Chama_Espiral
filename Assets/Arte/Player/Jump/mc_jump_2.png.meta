@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 2c4d99ca623fabe488d8efe160f0de3c
+guid: 4c3ed98b2e5ba0240858296e9c3ca7a4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2539746856783700817
-    second: mc_walk_4 1_0
+      213: -525971592463341765
+    second: mc_jump_2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -72,10 +72,10 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 4096
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: mc_walk_4 1_0
+      name: mc_jump_2_0
       rect:
         serializedVersion: 2
-        x: 50
-        y: 0
+        x: 46
+        y: 7
         width: 109
-        height: 196
+        height: 195
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 153e1026f4efe3320800000000000000
-      internalID: 2539746856783700817
+      spriteID: b37a6459f9f53b8f0800000000000000
+      internalID: -525971592463341765
       vertices: []
       indices: 
       edges: []
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      mc_walk_4 1_0: 2539746856783700817
+      mc_jump_2_0: -525971592463341765
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
