@@ -176,8 +176,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 585e77e57cc17a547881e113515cf29d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractObject
+  isActive: 0
   identity: 1
   interactType: 0
+  radius: 5.6
+  influenceStrength: 1.2
   luzFlame: {fileID: 0}
   particleFlame: {fileID: 0}
   luzIntensityTarget: 0

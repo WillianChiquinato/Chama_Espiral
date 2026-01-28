@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     public float ResetTimer;
     public float ResetTimerLimite;
     private int ataqueCounterAtual;
+    private bool waitingButtonRelease = false;
 
     //Healing
     [Header("Healing")]
@@ -247,6 +248,10 @@ public class PlayerController : MonoBehaviour
             //Mudar para animação.
             chamaNaMao.SetActive(false);
         }
+        else
+        {
+            chamaNaMao.SetActive(true);
+        }
 
         if (!canMove)
         {
@@ -320,7 +325,6 @@ public class PlayerController : MonoBehaviour
     {
         if (!DamageScript.VelocityLock)
         {
-
             rb.linearVelocity = new Vector2(moveInput.x * CurrentMoveSpeed, rb.linearVelocity.y);
 
             if (touching.IsGrouded && rb.linearVelocity.y <= 0f)
@@ -437,7 +441,15 @@ public class PlayerController : MonoBehaviour
     {
         if (!touching.IsGrouded) return;
 
-        // Começou a segurar
+        // Se acabou de recuperar munição, espera soltar o botão
+        if (waitingButtonRelease)
+        {
+            if (context.canceled)
+                waitingButtonRelease = false;
+
+            return;
+        }
+
         if (GameManager.Instance.currentFlameAmmo > 0)
         {
             if (context.started)
@@ -445,21 +457,33 @@ public class PlayerController : MonoBehaviour
                 isAttacking = true;
                 currentSpeedTarget = minAttackForce;
 
-                UIController.Instance.StartCoroutine(UIController.Instance.FadeInCanvasGroup(UIController.Instance.carregadorAttackSlider.gameObject, 0f, 0.4f));
+                UIController.Instance.StartCoroutine(
+                    UIController.Instance.FadeInCanvasGroup(
+                        UIController.Instance.carregadorAttackSlider.gameObject, 0f, 0.4f));
             }
 
-            // Soltou o botão
             if (context.canceled)
             {
                 isAttacking = false;
                 ResolveAttackDirection();
                 animacao.SetTrigger("releaseAttack");
-                UIController.Instance.StartCoroutine(UIController.Instance.FadeOutCanvasGroup(UIController.Instance.carregadorAttackSlider.gameObject, 0f, 0.4f));
-                return;
+
+                UIController.Instance.StartCoroutine(
+                    UIController.Instance.FadeOutCanvasGroup(
+                        UIController.Instance.carregadorAttackSlider.gameObject, 0f, 0.4f));
             }
         }
         else
         {
+            if (GameManager.Instance.delayReturnFlameAmmo >= GameManager.Instance.delayTargetReturnFlameAmmo)
+            {
+                GameManager.Instance.currentFlameAmmo++;
+                GameManager.Instance.delayReturnFlameAmmo = 0f;
+
+                waitingButtonRelease = true;
+                return;
+            }
+
             isAttacking = false;
             currentSpeedTarget = 0;
             GameManager.Instance.shakeController.ShakeNoBullets();
@@ -517,15 +541,6 @@ public class PlayerController : MonoBehaviour
             //JUMP
             IsJumping = false;
         }
-
-        StartCoroutine(OnHitPlayer());
-    }
-
-    IEnumerator OnHitPlayer()
-    {
-        originalMaterial.SetFloat("_HitIntensity", 0.7f);
-        yield return new WaitForSeconds(0.1f);
-        originalMaterial.SetFloat("_HitIntensity", 0f);
     }
 
     // public void OnLook(InputAction.CallbackContext context)

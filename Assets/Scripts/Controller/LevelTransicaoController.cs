@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,6 +11,11 @@ public class LevelTransicaoController : MonoBehaviour
     public void Transicao(string sceneName)
     {
         StartCoroutine(loadScene(sceneName));
+    }
+
+    internal void Transicao(object v)
+    {
+        throw new NotImplementedException();
     }
 
     IEnumerator loadScene(string sceneName)
