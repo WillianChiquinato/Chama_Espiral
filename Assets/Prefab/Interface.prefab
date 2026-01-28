@@ -840,6 +840,7 @@ GameObject:
   - component: {fileID: 1489750700199504002}
   - component: {fileID: 6478934869906351691}
   - component: {fileID: 195711112663184660}
+  - component: {fileID: 502684474880566874}
   m_Layer: 5
   m_Name: Interface
   m_TagString: Untagged
@@ -944,8 +945,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d213b4e265d209844bd070fc412f4fae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIController
+  UiControllerCanvasGroup: {fileID: 0}
   contagemBullets: {fileID: 7132489249178137863}
   carregadorAttackSlider: {fileID: 1368695167151271541}
+--- !u!225 &502684474880566874
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9062800396155274214}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &9151405229026224021
 GameObject:
   m_ObjectHideFlags: 0

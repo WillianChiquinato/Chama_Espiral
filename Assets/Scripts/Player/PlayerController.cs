@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -79,7 +80,7 @@ public class PlayerController : MonoBehaviour
     [Header("Attack Instances")]
     public GameObject chamaPrefab;
     public Transform attackPoint;
-    
+
     public float speedTarget = 0;
     public float currentSpeedTarget = 0;
     public float minAttackForce = 7f;
@@ -215,10 +216,10 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        // if (GameManager.instance != null)
-        // {
-        //     GameManager.instance.FullScreenDamageMaterial.SetFloat("_IsPulseActive", 0);
-        // }
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.FullScreenDamageMaterial.SetFloat("_IsPulseActive", 0);
+        }
 
         spriteRenderer = GetComponent<SpriteRenderer>();
         originalMaterial = spriteRenderer.material;
@@ -231,6 +232,11 @@ public class PlayerController : MonoBehaviour
     {
         if (!DamageScript.IsAlive)
         {
+            if (GameManager.Instance != null)
+            {
+                UIController.Instance.UiControllerCanvasGroup.alpha = 0f;
+                GameManager.Instance.PlayerDeath();
+            }
             return;
         }
 
@@ -500,18 +506,10 @@ public class PlayerController : MonoBehaviour
 
     public void OnHit(int damage, Vector2 knockback)
     {
-        //KNOCKBACK.
-        // if (DamageScript.Health != 1)
-        // {
-        //     StartCoroutine(FlashPulseDamage());
-        // }
-        // else
-        // {
-        //     StopCoroutine(FlashPulseDamage());
-        // }
-
+        Debug.LogWarning("BOMDA KRAI");
         rb.linearVelocity = Vector2.zero;
         rb.linearVelocity = new Vector2(knockback.x, rb.linearVelocity.y + knockback.y);
+
         GameManager.Instance.shakeController.ShakeHitDamage();
 
         if (DamageScript.IsAlive)
@@ -529,25 +527,6 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         originalMaterial.SetFloat("_HitIntensity", 0f);
     }
-
-    // IEnumerator FlashPulseDamage()
-    // {
-    //     isFlashingDamage = true;
-    //     GameManager.Instance.FullScreenDamageMaterial.SetFloat("_IsPulseActive", 1);
-    //     yield return new WaitForSeconds(0.35f);
-    //     isFlashingDamage = false;
-
-    //     // Se o player ainda estiver com 1 de vida, mantemos o pulse ativo
-    //     if (DamageScript.Health <= 1 && DamageScript.IsAlive)
-    //     {
-    //         GameManager.instance.FullScreenDamageMaterial.SetFloat("_IsPulseActive", 1);
-    //     }
-    //     else
-    //     {
-    //         GameManager.instance.FullScreenDamageMaterial.SetFloat("_IsPulseActive", 0);
-    //     }
-    // }
-
 
     // public void OnLook(InputAction.CallbackContext context)
     // {

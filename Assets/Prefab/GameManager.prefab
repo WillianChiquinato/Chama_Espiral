@@ -91,6 +91,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   player: {fileID: 0}
   cinemachineCamera: {fileID: 0}
+  noise: {fileID: 0}
   shakeController: {fileID: 0}
   flameMaxAmmo: 1
   currentFlameAmmo: 0
+  delayBeforeTension: 4
+  tensionDuration: 2.7
+  zoomDuration: 2.6
+  FullScreenDamageMaterial: {fileID: 2100000, guid: 9d27b763cf47bd444a8bbbca4975ce34, type: 2}
+  luzesRef:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

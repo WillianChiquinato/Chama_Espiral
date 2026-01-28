@@ -7,6 +7,8 @@ public class UIController : MonoBehaviour
 {
     public static UIController Instance;
 
+    public CanvasGroup UiControllerCanvasGroup;
+
     public TextMeshProUGUI contagemBullets;
     public Slider carregadorAttackSlider;
 
@@ -17,8 +19,9 @@ public class UIController : MonoBehaviour
 
     void Start()
     {
-        carregadorAttackSlider.GetComponent<CanvasGroup>().alpha = 0f;
+        UiControllerCanvasGroup = GetComponent<CanvasGroup>();
 
+        carregadorAttackSlider.GetComponent<CanvasGroup>().alpha = 0f;
         carregadorAttackSlider.maxValue = GameManager.Instance.player.maxAttackForce;
         carregadorAttackSlider.minValue = GameManager.Instance.player.minAttackForce;
     }
