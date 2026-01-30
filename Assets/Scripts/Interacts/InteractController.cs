@@ -63,6 +63,7 @@ public class InteractController : MonoBehaviour
 
         target.isActive = true;
         target.luzFlame.intensity = target.luzIntensityTarget;
+        target.colliderObject.enabled = false;
         target.particleFlame.Play();
     }
 }

@@ -11,6 +11,7 @@ public class InteractObject : MonoBehaviour
     public float influenceStrength = 1.2f;
     
     private Animator animator;
+    [HideInInspector] public Collider2D colliderObject;
     public Light2D luzFlame;
     public ParticleSystem particleFlame;
     [HideInInspector] public float luzIntensityTarget;
@@ -18,15 +19,16 @@ public class InteractObject : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
+        colliderObject = GetComponent<Collider2D>();
         luzFlame = GetComponentInChildren<Light2D>();
         particleFlame = GetComponentInChildren<ParticleSystem>();
 
         particleFlame.Stop();
         luzIntensityTarget = luzFlame.intensity;
         luzFlame.intensity = 0f;
-        if (interactType == null)
+        if (interactType == InteractType.None)
         {
-            interactType = InteractType.None;
+            interactType = InteractType.Input;
         }
     }
 

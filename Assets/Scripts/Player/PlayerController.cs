@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
     //Variaveis
     [Header("Variaveis")]
     public Damage DamageScript;
-    private bool isFlashingDamage = false;
+    // private bool isFlashingDamage = false;
     public TouchingVariable touching;
     public bool entrar;
 
